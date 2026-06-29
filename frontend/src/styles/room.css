@@ -291,14 +291,13 @@
   top: 12px;
   left: 16px;
   z-index: 2;
-  height: 90px;
-  width: auto;
+  width: 140px;
   pointer-events: none;
 }
 
 .etherx-room-logo img {
-  height: 90px;
-  width: auto;
+  width: 140px;
+  height: auto;
   object-fit: contain;
   display: block;
 }

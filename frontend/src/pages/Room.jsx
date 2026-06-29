@@ -112,67 +112,46 @@ export default function Room() {
         <img src={etherxLogo} alt="EtherX Meet" />
       </motion.div>
 
-      {/* Host controls — top right */}
+      {/* Record button — top right, host only */}
       {isHost && (
-        <div style={{ position: 'absolute', top: 16, right: 16, zIndex: 20, display: 'flex', gap: 8 }}>
-          {/* Record button */}
-          <button
-            onClick={isRecording ? handleStopRecording : handleStartRecording}
-            disabled={uploadingRec}
-            style={{
-              background: isRecording
-                ? 'rgba(234,67,53,0.15)'
-                : 'rgba(212,175,55,0.12)',
-              border: isRecording
-                ? '1px solid rgba(234,67,53,0.5)'
-                : '1px solid rgba(212,175,55,0.35)',
-              color: isRecording ? '#f87171' : '#d4af37',
-              borderRadius: 8,
-              padding: '8px 14px',
-              fontSize: 12,
-              fontWeight: 600,
-              cursor: uploadingRec ? 'wait' : 'pointer',
-              fontFamily: 'DM Sans, sans-serif',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6,
-              letterSpacing: '-0.01em',
-              transition: 'all 0.15s',
-              opacity: uploadingRec ? 0.6 : 1,
-            }}
-          >
-            <span style={{
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              background: isRecording ? '#f87171' : '#d4af37',
-              animation: isRecording ? 'pulse 1.2s ease-in-out infinite' : 'none',
-            }} />
-            {uploadingRec ? 'Uploading…' : isRecording ? 'Stop Rec' : 'Record'}
-          </button>
-
-          {/* End Meeting button */}
-          <button
-            onClick={handleEndMeeting}
-            disabled={isEnding}
-            style={{
-              background: isEnding ? 'rgba(234,67,53,0.7)' : '#ea4335',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 8,
-              padding: '8px 18px',
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: isEnding ? 'wait' : 'pointer',
-              fontFamily: 'DM Sans, sans-serif',
-              boxShadow: '0 4px 16px rgba(234,67,53,0.45)',
-              letterSpacing: '-0.01em',
-              transition: 'background 0.15s',
-            }}
-          >
-            {isEnding ? 'Ending…' : 'End Meeting'}
-          </button>
-        </div>
+        <button
+          onClick={isRecording ? handleStopRecording : handleStartRecording}
+          disabled={uploadingRec}
+          style={{
+            position: 'absolute',
+            top: 16,
+            right: 16,
+            zIndex: 20,
+            background: isRecording ? 'rgba(234,67,53,0.12)' : 'rgba(0,0,0,0.55)',
+            border: isRecording
+              ? '1px solid rgba(234,67,53,0.45)'
+              : '1px solid rgba(255,255,255,0.12)',
+            color: isRecording ? '#f87171' : 'rgba(255,255,255,0.75)',
+            borderRadius: 8,
+            padding: '8px 16px',
+            fontSize: 12,
+            fontWeight: 600,
+            cursor: uploadingRec ? 'wait' : 'pointer',
+            fontFamily: 'Inter, system-ui, sans-serif',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 7,
+            letterSpacing: '0.01em',
+            backdropFilter: 'blur(8px)',
+            transition: 'all 0.15s ease',
+            opacity: uploadingRec ? 0.5 : 1,
+          }}
+        >
+          <span style={{
+            width: 7,
+            height: 7,
+            borderRadius: '50%',
+            background: isRecording ? '#f87171' : 'rgba(255,255,255,0.5)',
+            flexShrink: 0,
+            animation: isRecording ? 'pulse 1.2s ease-in-out infinite' : 'none',
+          }} />
+          {uploadingRec ? 'Uploading…' : isRecording ? 'Stop' : 'Record'}
+        </button>
       )}
 
 
