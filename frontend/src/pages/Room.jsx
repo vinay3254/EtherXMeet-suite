@@ -21,7 +21,6 @@ function getMimeType() {
 export default function Room() {
   const { code } = useParams();
   const navigate = useNavigate();
-  const [isEnding, setIsEnding] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [uploadingRec, setUploadingRec] = useState(false);
 
@@ -34,6 +33,23 @@ export default function Room() {
   useEffect(() => {
     document.title = `Meeting · ${code}`;
   }, [code]);
+
+  // Instant navigation when Jitsi fires hangup / readyToClose
+  useEffect(() => {
+    const onMessage = (e) => {
+      try {
+        const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+        const evt = data?.event ?? data?.type ?? '';
+        if (['readyToClose', 'videoConferenceLeft', 'hangup'].includes(evt)) {
+          sessionStorage.removeItem('etherx_host_room');
+          sessionStorage.removeItem('etherx_meet_start');
+          navigate(ROUTES.DASHBOARD, { replace: true });
+        }
+      } catch { /* non-JSON messages — ignore */ }
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, [navigate]);
 
   const uploadRecording = useCallback(async () => {
     const blob = new Blob(chunksRef.current, { type: 'video/webm' });
@@ -49,7 +65,7 @@ export default function Room() {
     try {
       await apiClient.post('/api/recordings/upload', form);
     } catch {
-      // upload failed silently — recording stays in memory for now
+      // upload failed silently
     } finally {
       setUploadingRec(false);
     }
@@ -57,10 +73,7 @@ export default function Room() {
 
   const handleStartRecording = async () => {
     try {
-      const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
-        audio: true,
-      });
+      const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
       chunksRef.current = [];
       recordStartRef.current = Date.now();
       const mimeType = getMimeType();
@@ -70,32 +83,18 @@ export default function Room() {
       mr.start(1000);
       mediaRecorderRef.current = mr;
       setIsRecording(true);
-
       stream.getVideoTracks()[0].addEventListener('ended', () => {
         if (mediaRecorderRef.current?.state === 'recording') {
           mediaRecorderRef.current.stop();
           setIsRecording(false);
         }
       });
-    } catch {
-      // user cancelled or permission denied
-    }
+    } catch { /* user cancelled or permission denied */ }
   };
 
   const handleStopRecording = () => {
-    if (mediaRecorderRef.current?.state === 'recording') {
-      mediaRecorderRef.current.stop();
-    }
+    if (mediaRecorderRef.current?.state === 'recording') mediaRecorderRef.current.stop();
     setIsRecording(false);
-  };
-
-  const handleEndMeeting = async () => {
-    if (isRecording) handleStopRecording();
-    setIsEnding(true);
-    sessionStorage.removeItem('etherx_host_room');
-    sessionStorage.removeItem('etherx_meet_start');
-    setIsEnding(false);
-    navigate(ROUTES.DASHBOARD);
   };
 
   return (
