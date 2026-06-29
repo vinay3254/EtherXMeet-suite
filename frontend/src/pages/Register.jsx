@@ -119,7 +119,7 @@ export default function Register() {
           </motion.h2>
           
           <motion.p variants={itemVariants} className="auth-form-sub">
-            Join EtherXMeet and start collaborating.
+            Enter your details to sign up.
           </motion.p>
 
           <motion.div variants={itemVariants} className="auth-social-group">
@@ -140,7 +140,7 @@ export default function Register() {
           </motion.div>
 
           <motion.div variants={itemVariants} className="auth-divider">
-            or use credentials
+            or
           </motion.div>
 
           {error && (
@@ -206,7 +206,7 @@ export default function Register() {
 
           <motion.p variants={itemVariants} className="auth-footer">
             Already have an account?{' '}
-            <Link to="/login" className="auth-footer-link">Log in</Link>
+            <Link to="/login" className="auth-footer-link">Sign in</Link>
           </motion.p>
         </motion.div>
       </motion.div>

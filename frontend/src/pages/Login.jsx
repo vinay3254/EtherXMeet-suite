@@ -160,7 +160,7 @@ export default function Login() {
           
           {!isForgotMode && (
             <motion.p variants={itemVariants} className="auth-form-sub">
-              Unlock the full potential of EtherXMeet.
+              Enter your details to sign in.
             </motion.p>
           )}
 
@@ -184,7 +184,7 @@ export default function Login() {
               </motion.div>
 
               <motion.div variants={itemVariants} className="auth-divider">
-                or use credentials
+                or
               </motion.div>
             </>
           )}
@@ -338,7 +338,7 @@ export default function Login() {
           {!isForgotMode && (
             <motion.p variants={itemVariants} className="auth-footer">
               Don't have an account?{' '}
-              <Link to="/register" className="auth-footer-link">Register</Link>
+              <Link to="/register" className="auth-footer-link">Sign up</Link>
             </motion.p>
           )}
         </motion.div>

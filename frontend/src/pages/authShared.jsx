@@ -32,17 +32,15 @@ export const AUTH_CSS = `
   .auth-split-wrapper {
     display: flex;
     width: 100%;
-    max-width: 980px;
-    min-height: 620px;
-    background: linear-gradient(135deg, rgba(18, 20, 20, 0.7) 0%, rgba(9, 11, 11, 0.85) 100%);
-    border: 1px solid rgba(212, 181, 113, 0.12);
-    border-radius: 24px;
+    max-width: 440px;
+    background: rgba(10, 11, 12, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
     box-shadow: 
-      0 40px 100px rgba(0, 0, 0, 0.75), 
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 0 40px rgba(212, 181, 113, 0.02);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+      0 30px 70px rgba(0, 0, 0, 0.7), 
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
     overflow: hidden;
     z-index: 2;
     position: relative;
@@ -57,7 +55,7 @@ export const AUTH_CSS = `
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(800px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(212, 181, 113, 0.08), transparent 50%);
+    background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(212, 181, 113, 0.06), transparent 50%);
     z-index: 1;
     pointer-events: none;
     opacity: 0;
@@ -72,157 +70,22 @@ export const AUTH_CSS = `
   .auth-top-accent {
     position: absolute;
     top: 0;
-    left: 10%;
-    right: 10%;
+    left: 12%;
+    right: 12%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(212,181,113,0.3), rgba(255,255,255,0.1), rgba(212,181,113,0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(212,181,113,0.25), rgba(255,255,255,0.08), rgba(212,181,113,0.25), transparent);
     z-index: 3;
   }
 
-  /* Left Pane (Feature / Brand) */
+  /* Left Pane (Feature / Brand) - Muted/Hidden as card is single-pane */
   .auth-left-pane {
-    flex: 1.15;
-    padding: 48px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-right: 1px solid rgba(212, 181, 113, 0.08);
-    background: linear-gradient(180deg, rgba(212, 181, 113, 0.01) 0%, rgba(9, 11, 11, 0.5) 100%);
-    position: relative;
-    z-index: 2;
-  }
-
-  .auth-badge-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    align-self: flex-start;
-    padding: 6px 12px;
-    background: rgba(212, 181, 113, 0.06);
-    border: 1px solid rgba(212, 181, 113, 0.15);
-    border-radius: 9999px;
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #D4B571;
-    margin-bottom: 24px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
-  }
-
-  .auth-badge-dot {
-    width: 5px;
-    height: 5px;
-    background-color: #D4B571;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #D4B571;
-    animation: auth-pulse 2s infinite;
-  }
-
-  @keyframes auth-pulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 181, 113, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(212, 181, 113, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 181, 113, 0); }
-  }
-
-  .auth-left-header {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-  }
-
-  .auth-left-logo {
-    height: 80px;
-    width: auto;
-    align-self: flex-start;
-    margin-left: -15px;
-    margin-bottom: 8px;
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
-  }
-
-  .auth-feature-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #FFF 30%, #E5CFA3 70%, #D4B571 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-top: 8px;
-    margin-bottom: 12px;
-  }
-
-  .auth-feature-desc {
-    font-size: 14px;
-    line-height: 1.6;
-    color: #9ca3af;
-    margin-bottom: 32px;
-  }
-
-  .auth-feature-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .auth-feature-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.015);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .auth-feature-item:hover {
-    background: rgba(212, 181, 113, 0.04);
-    border-color: rgba(212, 181, 113, 0.2);
-    transform: translateX(4px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  }
-
-  .auth-feature-icon-box {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background: rgba(212, 181, 113, 0.08);
-    border: 1px solid rgba(212, 181, 113, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #D4B571;
-    flex-shrink: 0;
-    transition: all 0.3s ease;
-  }
-
-  .auth-feature-item:hover .auth-feature-icon-box {
-    background: #D4B571;
-    color: #090B0B;
-    box-shadow: 0 0 12px rgba(212, 181, 113, 0.4);
-  }
-
-  .auth-feature-text h3 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #E5CFA3;
-    margin: 0 0 3px;
-  }
-
-  .auth-feature-text p {
-    font-size: 12px;
-    color: #6b7280;
-    margin: 0;
-    line-height: 1.45;
+    display: none;
   }
 
   /* Right Pane (Form side) */
   .auth-right-pane {
-    flex: 0.85;
-    padding: 48px;
+    flex: 1;
+    padding: 40px 32px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -231,8 +94,8 @@ export const AUTH_CSS = `
   }
 
   .auth-logo-mobile {
-    display: none;
-    height: 60px;
+    display: block;
+    height: 48px;
     width: auto;
     margin: 0 auto 16px;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
@@ -240,19 +103,19 @@ export const AUTH_CSS = `
 
   .auth-form-title {
     font-family: 'Outfit', sans-serif;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 700;
     color: #FFF;
     letter-spacing: -0.02em;
     margin: 0 0 6px;
-    text-align: left;
+    text-align: center;
   }
 
   .auth-form-sub {
-    font-size: 13px;
-    color: #6b7280;
-    margin: 0 0 24px;
-    text-align: left;
+    font-size: 12.5px;
+    color: #7b8089;
+    margin: 0 0 20px;
+    text-align: center;
   }
 
   /* Social Buttons */
@@ -265,27 +128,26 @@ export const AUTH_CSS = `
 
   .auth-social-btn {
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    color: #e5e7eb;
-    padding: 11px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    color: #d1d5db;
+    padding: 10px 14px;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 500;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .auth-social-btn:hover {
-    background: rgba(212, 181, 113, 0.04);
-    border-color: rgba(212, 181, 113, 0.25);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
     color: #FFF;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
 
   .auth-social-btn:active {
@@ -296,7 +158,7 @@ export const AUTH_CSS = `
     display: flex;
     align-items: center;
     text-align: center;
-    color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.12);
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -307,7 +169,7 @@ export const AUTH_CSS = `
   .auth-divider::before, .auth-divider::after {
     content: '';
     flex: 1;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .auth-divider:not(:empty)::before {
@@ -322,7 +184,7 @@ export const AUTH_CSS = `
   .auth-form {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
   }
 
   .auth-input-wrap {
@@ -333,15 +195,35 @@ export const AUTH_CSS = `
   .auth-input {
     width: 100%;
     box-sizing: border-box;
-    background: rgba(18, 20, 20, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 13px 16px 13px 44px;
+    background: rgba(0, 0, 0, 0.25) !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+    border-radius: 8px !important;
+    padding: 12px 16px 12px 42px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 13px;
-    color: #FFF;
+    color: #FFF !important;
     outline: none;
     transition: all 0.25s ease;
+  }
+
+  /* Rock-solid Autofill Override */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active,
+  input:-internal-autofill-selected,
+  input:-internal-autofill-previewed {
+    -webkit-box-shadow: 0 0 0 1000px #121415 inset !important;
+    -webkit-text-fill-color: #FFF !important;
+    box-shadow: 0 0 0 1000px #121415 inset !important;
+    text-fill-color: #FFF !important;
+    caret-color: #FFF !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 8px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 13px !important;
+    color: #FFF !important;
+    transition: background-color 5000s ease-in-out 0s;
   }
 
   .auth-input::placeholder {
@@ -349,17 +231,14 @@ export const AUTH_CSS = `
   }
 
   .auth-input:focus {
-    background: rgba(18, 20, 20, 0.85);
-    border-color: #D4B571;
-    box-shadow: 
-      0 0 0 1px #D4B571, 
-      0 0 20px rgba(212, 181, 113, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.4) !important;
+    border-color: #D4B571 !important;
+    box-shadow: 0 0 0 1px #D4B571, 0 0 14px rgba(212, 181, 113, 0.08) !important;
   }
 
   .auth-input-wrap svg.icon-left {
     position: absolute;
-    left: 15px;
+    left: 14px;
     top: 50%;
     transform: translateY(-50%);
     color: #4b5563;
@@ -368,12 +247,12 @@ export const AUTH_CSS = `
 
   .auth-input-wrap:focus-within svg.icon-left {
     color: #D4B571;
-    filter: drop-shadow(0 0 4px rgba(212, 181, 113, 0.4));
+    filter: drop-shadow(0 0 4px rgba(212, 181, 113, 0.3));
   }
 
   .auth-eye-btn {
     position: absolute;
-    right: 15px;
+    right: 14px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -404,7 +283,7 @@ export const AUTH_CSS = `
     align-items: center;
     gap: 8px;
     font-size: 12px;
-    color: #9ca3af;
+    color: #8c9096;
     cursor: pointer;
     user-select: none;
   }
@@ -412,12 +291,12 @@ export const AUTH_CSS = `
   .auth-checkbox {
     appearance: none;
     -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 4px;
     outline: none;
-    background: rgba(18, 20, 20, 0.6);
+    background: rgba(0, 0, 0, 0.3);
     cursor: pointer;
     position: relative;
     transition: all 0.2s ease;
@@ -430,7 +309,7 @@ export const AUTH_CSS = `
 
   .auth-checkbox:checked::after {
     content: '✓';
-    font-size: 11px;
+    font-size: 10px;
     color: #090B0B;
     position: absolute;
     top: 50%;
@@ -458,57 +337,54 @@ export const AUTH_CSS = `
 
   /* Error and Success box */
   .auth-error-box {
-    background: rgba(239, 68, 68, 0.08);
-    border: 1px solid rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.06);
+    border: 1px solid rgba(239, 68, 68, 0.15);
     color: #f87171;
-    padding: 12px 14px;
-    border-radius: 10px;
-    font-size: 12.5px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 12px;
     margin-bottom: 8px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     line-height: 1.4;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.05);
   }
 
   .auth-success-box {
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    background: rgba(16, 185, 129, 0.06);
+    border: 1px solid rgba(16, 185, 129, 0.15);
     color: #34d399;
-    padding: 12px 14px;
-    border-radius: 10px;
-    font-size: 12.5px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 12px;
     margin-bottom: 8px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     line-height: 1.4;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.05);
   }
 
   /* Submit CTA button */
   .auth-cta-btn {
-    background: linear-gradient(135deg, #E5CFA3 0%, #D4B571 50%, #A28448 100%);
+    background: #D4B571;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     color: #090B0B;
-    padding: 13px 16px;
+    padding: 12px 16px;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 700;
     letter-spacing: 0.02em;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     margin-top: 8px;
-    box-shadow: 0 4px 20px rgba(212, 181, 113, 0.15);
+    box-shadow: 0 4px 12px rgba(212, 181, 113, 0.12);
   }
 
   .auth-cta-btn:hover:not(:disabled) {
+    background: #E5CFA3;
     transform: translateY(-1px);
-    box-shadow: 
-      0 6px 24px rgba(212, 181, 113, 0.25),
-      0 0 0 1px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 16px rgba(212, 181, 113, 0.18);
   }
 
   .auth-cta-btn:active:not(:disabled) {
@@ -530,8 +406,8 @@ export const AUTH_CSS = `
     height: 32px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #9ca3af;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #8c9096;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -541,8 +417,8 @@ export const AUTH_CSS = `
   }
 
   .auth-floating-close:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
     color: #FFF;
     transform: rotate(90deg);
   }
@@ -550,7 +426,7 @@ export const AUTH_CSS = `
   .auth-back-btn {
     background: none;
     border: none;
-    color: #9ca3af;
+    color: #8c9096;
     font-family: inherit;
     font-size: 13px;
     cursor: pointer;
@@ -605,7 +481,7 @@ export const AUTH_CSS = `
   @media (max-width: 840px) {
     .auth-split-wrapper {
       flex-direction: column;
-      max-width: 460px;
+      max-width: 440px;
       min-height: auto;
       margin: 20px auto;
     }
@@ -615,7 +491,7 @@ export const AUTH_CSS = `
     }
     
     .auth-right-pane {
-      padding: 40px 24px;
+      padding: 36px 24px;
     }
     
     .auth-logo-mobile {
@@ -689,55 +565,23 @@ export function AuthLeftPane({ isLogin = true, logoSrc }) {
   return (
     <div className="auth-left-pane">
       <div>
-        <div className="auth-badge-pill">
-          <div className="auth-badge-dot" />
-          v2.4.0 • SECURED WITH WEB3 & JWT
-        </div>
         {logoSrc && <img src={logoSrc} alt="EtherXMeet" className="auth-left-logo" />}
+        <div className="auth-badge-pill" style={{ marginTop: '4px', marginBottom: '24px' }}>
+          <div className="auth-badge-dot" />
+          SECURED SESSION
+        </div>
         <div className="auth-left-header">
           <h2 className="auth-feature-title">
-            {isLogin ? 'Welcome back to your workspace.' : 'Start collaborating in high-definition.'}
+            {isLogin ? 'Welcome back.' : 'Create your account.'}
           </h2>
           <p className="auth-feature-desc">
-            Run high-quality video rooms, async follow-ups, and interactive recording playbacks from one premium cockpit.
+            {isLogin ? 'Sign in to access your meetings and dashboard.' : 'Start collaborating in high-definition video rooms.'}
           </p>
         </div>
       </div>
 
-      <div className="auth-feature-list">
-        <div className="auth-feature-item">
-          <div className="auth-feature-icon-box">
-            <Video size={18} />
-          </div>
-          <div className="auth-feature-text">
-            <h3>Pure Web2 Video Rooms</h3>
-            <p>Direct low-latency peer-to-peer conferencing using premium WebRTC egress.</p>
-          </div>
-        </div>
-
-        <div className="auth-feature-item">
-          <div className="auth-feature-icon-box">
-            <BarChart2 size={18} />
-          </div>
-          <div className="auth-feature-text">
-            <h3>Speaking Time & Sentiment</h3>
-            <p>Get real insights on participation equity, questions asked, and room energy.</p>
-          </div>
-        </div>
-
-        <div className="auth-feature-item">
-          <div className="auth-feature-icon-box">
-            <Shield size={18} />
-          </div>
-          <div className="auth-feature-text">
-            <h3>Enterprise Privacy</h3>
-            <p>Secure local profile cache and cookie storage ensuring absolute data separation.</p>
-          </div>
-        </div>
-      </div>
-
-      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', marginTop: 24 }}>
-        EtherXMeet © 2026 · Premium Collaboration Cockpit
+      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)', marginTop: 'auto' }}>
+        EtherXMeet © 2026
       </div>
     </div>
   );
