@@ -1,35 +1,27 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import apiClient, { getApiErrorMessage } from '../utils/apiClient'
 import { persistAuthSession, isAuthenticated } from '../utils/auth'
 import etherxLogo from '../assets/etherx_transparent.png'
-import { AUTH_CSS, AuthLeftPane, AppleIcon, GoogleIcon, PersonIcon, MailIcon, LockIcon, EyeIcon } from './authShared'
+import { AUTH_CSS, AppleIcon, GoogleIcon, PersonIcon, MailIcon, LockIcon, EyeIcon } from './authShared'
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.1
-    }
-  }
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 15 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 100,
-      damping: 15
-    }
-  }
+function getStrength(pw) {
+  if (!pw) return { score: 0, label: '', color: '' }
+  let s = 0
+  if (pw.length >= 8) s++
+  if (/[A-Z]/.test(pw)) s++
+  if (/[0-9]/.test(pw)) s++
+  if (/[^A-Za-z0-9]/.test(pw)) s++
+  return [
+    { score: 0, label: '', color: '' },
+    { score: 1, label: 'Weak',   color: '#ef4444' },
+    { score: 2, label: 'Fair',   color: '#f59e0b' },
+    { score: 3, label: 'Good',   color: '#3b82f6' },
+    { score: 4, label: 'Strong', color: '#22c55e' },
+  ][s]
 }
 
 export default function Register() {
@@ -39,22 +31,13 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError]               = useState('')
   const [loading, setLoading]           = useState(false)
-  
+
   const navigate = useNavigate()
-  const cardRef = useRef(null)
+  const strength = getStrength(password)
 
   useEffect(() => {
     if (isAuthenticated()) navigate('/', { replace: true })
   }, [navigate])
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return
-    const rect = cardRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    cardRef.current.style.setProperty('--mouse-x', `${x}px`)
-    cardRef.current.style.setProperty('--mouse-y', `${y}px`)
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -71,7 +54,7 @@ export default function Register() {
       }
       setError('Registration failed. Please try again.')
     } catch (err) {
-      setError(getApiErrorMessage(err, 'Cannot connect to server. Make sure backend is running.'))
+      setError(getApiErrorMessage(err, 'Cannot connect to server.'))
     }
     setLoading(false)
   }
@@ -79,136 +62,75 @@ export default function Register() {
   return (
     <div className="auth-page">
       <style>{AUTH_CSS}</style>
-      <div className="auth-glow-accent" />
 
+      {/* 140px fixed corner logo */}
+      <img src={etherxLogo} alt="EtherXMeet" className="auth-corner-logo" />
+
+      {/* Close */}
+      <button className="auth-floating-close" onClick={() => navigate('/')} title="Close">✕</button>
+
+      {/* Black card */}
       <motion.div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        className="auth-split-wrapper"
-        initial={{ opacity: 0, scale: 0.97 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="auth-card"
+        initial={{ opacity: 0, y: 16, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       >
-        <button
-          type="button"
-          className="auth-floating-close"
-          onClick={() => navigate('/')}
-          title="Close"
-        >
-          ✕
-        </button>
+        <h2 className="auth-form-title">Create account</h2>
+        <p className="auth-form-sub">Get started for free.</p>
 
-        <div className="auth-top-accent" />
-        <AuthLeftPane isLogin={false} logoSrc={etherxLogo} />
+        <div className="auth-social-group">
+          <button className="auth-social-btn" onClick={() => { window.location.href = `${API_BASE}/api/auth/apple` }}>
+            <AppleIcon /> Apple
+          </button>
+          <button className="auth-social-btn" onClick={() => { window.location.href = `${API_BASE}/api/auth/google` }}>
+            <GoogleIcon /> Google
+          </button>
+        </div>
 
-        <motion.div
-          className="auth-right-pane"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.img
-            variants={itemVariants}
-            src={etherxLogo}
-            alt="EtherXMeet"
-            className="auth-logo-mobile"
-          />
+        <div className="auth-divider">or</div>
 
-          <motion.h2 variants={itemVariants} className="auth-form-title">
-            Create Account
-          </motion.h2>
-          
-          <motion.p variants={itemVariants} className="auth-form-sub">
-            Enter your details to sign up.
-          </motion.p>
+        {error && <div className="auth-error-box"><span>⚠</span> {error}</div>}
 
-          <motion.div variants={itemVariants} className="auth-social-group">
-            <button
-              type="button"
-              className="auth-social-btn"
-              onClick={() => { window.location.href = `${API_BASE}/api/auth/apple` }}
-            >
-              <AppleIcon /> Apple
-            </button>
-            <button
-              type="button"
-              className="auth-social-btn"
-              onClick={() => { window.location.href = `${API_BASE}/api/auth/google` }}
-            >
-              <GoogleIcon /> Google
-            </button>
-          </motion.div>
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="auth-input-wrap">
+            <PersonIcon />
+            <input className="auth-input" type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required autoComplete="name" />
+          </div>
 
-          <motion.div variants={itemVariants} className="auth-divider">
-            or
-          </motion.div>
+          <div className="auth-input-wrap">
+            <MailIcon />
+            <input className="auth-input" type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="email" />
+          </div>
 
-          {error && (
-            <motion.div variants={itemVariants} className="auth-error-box">
-              <span>⚠</span> {error}
-            </motion.div>
-          )}
-
-          <motion.form variants={itemVariants} onSubmit={handleSubmit} className="auth-form">
-            <div className="auth-input-wrap">
-              <PersonIcon />
-              <input
-                className="auth-input"
-                type="text"
-                placeholder="Your Display Name"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="auth-input-wrap">
-              <MailIcon />
-              <input
-                className="auth-input"
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-              />
-            </div>
-
+          <div>
             <div className="auth-input-wrap">
               <LockIcon />
-              <input
-                className="auth-input"
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Create password (min. 6 chars)"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
-                style={{ paddingRight: '44px' }}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(v => !v)}
-                className="auth-eye-btn"
-                tabIndex={-1}
-              >
+              <input className="auth-input" type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required style={{ paddingRight: '42px' }} autoComplete="new-password" />
+              <button type="button" className="auth-eye-btn" onClick={() => setShowPassword(v => !v)} tabIndex={-1}>
                 <EyeIcon open={showPassword} />
               </button>
             </div>
+            {password.length > 0 && (
+              <div>
+                <div className="auth-strength-bar">
+                  <div className="auth-strength-fill" style={{ width: `${(strength.score / 4) * 100}%`, background: strength.color }} />
+                </div>
+                <div style={{ fontSize: 11, color: strength.color, marginTop: 5, fontWeight: 500 }}>
+                  {strength.label}
+                </div>
+              </div>
+            )}
+          </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="auth-cta-btn"
-            >
-              {loading ? 'Creating account...' : 'Create account'}
-            </button>
-          </motion.form>
+          <button type="submit" disabled={loading} className="auth-cta-btn">
+            {loading ? 'Creating account…' : 'Create account'}
+          </button>
+        </form>
 
-          <motion.p variants={itemVariants} className="auth-footer">
-            Already have an account?{' '}
-            <Link to="/login" className="auth-footer-link">Sign in</Link>
-          </motion.p>
-        </motion.div>
+        <p className="auth-footer">
+          Have an account? <Link to="/login" className="auth-footer-link">Sign in</Link>
+        </p>
       </motion.div>
     </div>
   )
